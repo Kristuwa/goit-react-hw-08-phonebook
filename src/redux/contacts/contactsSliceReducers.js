@@ -9,27 +9,27 @@ export const handleRejected = (state, action) => ({
   error: action.payload,
 });
 
-export const handleFulfield = state => ({
+export const handleFulfilled = state => ({
   ...state,
   isLoading: false,
   error: null,
 });
 
-export const fetchContactsFulfilledReduser = (state, action) => {
+export const fetchContactsFulfilledReducer = (state, action) => {
   return {
     ...state,
     items: action.payload,
   };
 };
 
-export const addContactFulfilledReduser = (state, action) => {
+export const addContactFulfilledReducer = (state, action) => {
   return {
     ...state,
     items: [...state.items, action.payload],
   };
 };
 
-export const deleteContactFulfilledReduser = (state, action) => {
+export const deleteContactFulfilledReducer = (state, action) => {
   return {
     ...state,
     items: state.items.filter(({ id }) => id !== action.payload.id),
