@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import url from '../../img/bg-phone.jpg';
+import url from '../img/bg-phone.jpg';
 
 export const Container = styled.div`
   height: 100vh;

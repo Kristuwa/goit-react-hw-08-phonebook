@@ -1,71 +1,53 @@
-import ContactForm from '../ContactForm';
-import ContactList from '../ContactList';
-import { Toaster } from 'react-hot-toast';
-import {
-  Container,
-  TitleForm,
-  TitleContacts,
-  ContentBlock,
-  ScrollBar,
-  Message,
-} from './App.styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectFilterList } from 'redux/selectors';
-import Filter from 'components/Filter';
-import {
-  selectError,
-  selectIsLoading,
-  selectContacts,
-} from 'redux/contacts/selectors';
-import { useEffect } from 'react';
-import { fetchContacts } from 'redux/operations';
-import { Notification } from 'components/Notification/Notification';
-import { Loader } from 'components/Loader/Loader';
-import { RiContactsFill } from 'react-icons/ri';
+import { useEffect, lazy } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
+import { Layout } from '../Layout/Layout';
+import { PrivateRoute } from '../PrivateRoute/PrivateRoute';
+import { RestrictedRoute } from '../RestrictedRoute/RestrictedRoute';
+import { refreshUser } from 'redux/auth/operations';
+import { useAuth } from '../../hooks/useAuth';
+
+const HomePage = lazy(() => import('../../pages/Home'));
+const RegisterPage = lazy(() => import('../../pages/Register'));
+const LoginPage = lazy(() => import('../../pages/Login'));
+const ContactsPage = lazy(() => import('../../pages/Contacts'));
 
 export const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const filterList = useSelector(selectFilterList);
+  const { isRefreshing } = useAuth();
+
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
-
-  return (
-    <Container>
-      <ContentBlock>
-        <TitleForm>Phonebook</TitleForm>
-        <ContactForm />
-      </ContentBlock>
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          style: {
-            background: '#363636',
-            color: '#fff',
-          },
-        }}
-      />
-      <ContentBlock>
-        <TitleContacts>Contacts</TitleContacts>
-
-        {error && <Notification message="Contacts no found" />}
-        {!isLoading && !error && contacts.length === 0 && (
-          <Message>
-            You have no contacts, add your first contact <RiContactsFill />
-          </Message>
-        )}
-        {contacts.length > 0 && <Filter />}
-        {isLoading && !error && <Loader />}
-        {filterList.length > 0 && (
-          <ScrollBar>
-            <ContactList />
-          </ScrollBar>
-        )}
-      </ContentBlock>
-    </Container>
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route
+          path="/register"
+          element={
+            <RestrictedRoute
+              redirectTo="/contacts"
+              component={<RegisterPage />}
+            />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RestrictedRoute redirectTo="/contacts" component={<LoginPage />} />
+          }
+        />
+        <Route
+          path="/contacts"
+          element={
+            <PrivateRoute redirectTo="/contacts" component={<ContactsPage />} />
+          }
+        />
+      </Route>
+    </Routes>
   );
 };

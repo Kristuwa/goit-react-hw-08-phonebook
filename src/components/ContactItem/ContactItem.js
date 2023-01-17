@@ -1,7 +1,7 @@
 import { Item, Button, Number, Contact, Name } from './ContactItem.styled';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from 'redux/operations';
+import { deleteContact } from 'redux/contacts/operations';
 import { selectIsLoading } from 'redux/contacts/selectors';
 import toast from 'react-hot-toast';
 import { useState } from 'react';

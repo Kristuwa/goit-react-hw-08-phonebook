@@ -1,5 +1,5 @@
 import { FormContainer, Input, Button, Label } from './ContactForm.styled';
-import { addContact } from 'redux/operations';
+import { addContact } from 'redux/contacts/operations';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { selectContacts } from 'redux/contacts/selectors';
