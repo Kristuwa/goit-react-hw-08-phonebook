@@ -28,6 +28,7 @@ const ContactForm = () => {
       }
     }
     dispatch(addContact(contact))
+      .unwrap()
       .then(response =>
         toast.success(
           `${response.payload.name} was added to your List of Contacts`

@@ -14,8 +14,7 @@ const ContactItem = ({ id, name, number }) => {
   const isLoading = useSelector(selectIsLoading);
   const handleDelete = () => {
     setDeletingId(id);
-    dispatch(deleteContact(id))
-      .then(response => {
+    dispatch(deleteContact(id)).unwrap().then(response => {
         toast.error(
           `Contact ${response.payload.name} was deleted from your List of Contacts`
         );
