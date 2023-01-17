@@ -35,3 +35,7 @@ export const deleteContactFulfilledReducer = (state, action) => {
     items: state.items.filter(({ id }) => id !== action.payload.id),
   };
 };
+
+export const logOutFulfilledReducer = state => {
+  return { ...state, items: [], error: null, isLoading: false };
+};
