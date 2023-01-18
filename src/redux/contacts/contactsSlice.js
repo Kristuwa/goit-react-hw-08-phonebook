@@ -10,10 +10,10 @@ import {
   logOutFulfilledReducer,
 } from './contactsSliceReducers';
 import { logOut } from 'redux/auth/operations';
+import { getActions } from 'helpers/functions';
 
 const contactsInitialState = { items: [], isLoading: false, error: null };
 const extraActions = [fetchContacts, addContact, deleteContact];
-const getActions = type => extraActions.map(action => action[type]);
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -24,9 +24,18 @@ const contactsSlice = createSlice({
       .addCase(addContact.fulfilled, addContactFulfilledReducer)
       .addCase(deleteContact.fulfilled, deleteContactFulfilledReducer)
       .addCase(logOut.fulfilled, logOutFulfilledReducer)
-      .addMatcher(isAnyOf(...getActions('pending')), handlePending)
-      .addMatcher(isAnyOf(...getActions('fulfilled')), handleFulfilled)
-      .addMatcher(isAnyOf(...getActions('rejected')), handleRejected);
+      .addMatcher(
+        isAnyOf(...getActions(extraActions, 'pending')),
+        handlePending
+      )
+      .addMatcher(
+        isAnyOf(...getActions(extraActions, 'fulfilled')),
+        handleFulfilled
+      )
+      .addMatcher(
+        isAnyOf(...getActions(extraActions, 'rejected')),
+        handleRejected
+      );
   },
 });
 
