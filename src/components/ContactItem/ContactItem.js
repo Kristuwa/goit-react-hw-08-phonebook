@@ -1,5 +1,6 @@
 import { Item, Button, Number, Contact, Name } from './ContactItem.styled';
 import PropTypes from 'prop-types';
+import { unwrapResult } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from 'redux/contacts/operations';
 import { selectIsLoading } from 'redux/contacts/selectors';
@@ -14,12 +15,14 @@ const ContactItem = ({ id, name, number }) => {
   const isLoading = useSelector(selectIsLoading);
   const handleDelete = () => {
     setDeletingId(id);
-    dispatch(deleteContact(id)).unwrap().then(response => {
+    dispatch(deleteContact(id))
+      .then(unwrapResult)
+      .then(response => {
         toast.error(
-          `Contact ${response.payload.name} was deleted from your List of Contacts`
+          `Contact ${response.name} was deleted from your List of Contacts`
         );
       })
-      .catch(() => toast.error(`Something wrong`));
+      .catch(e => toast.error(`Something wrong: ${e.message}`));
   };
   const isDeleting = isLoading && id === deletingId;
 

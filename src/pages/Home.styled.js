@@ -25,9 +25,17 @@ export const Container = styled.div`
 export const Title = styled.h1`
   margin-top: 20px;
   font-weight: 500;
-  font-size: 32px;
+  font-size: 28px;
   text-align: center;
-  text-shadow: 1px 1px 2px #602603;
+  text-shadow: 1px 1px 2px #040404;
+  color: #464240;
+
+  & span {
+    display: block;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 export const IconContainer = styled.span`

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { selectContacts } from 'redux/contacts/selectors';
 import toast from 'react-hot-toast';
 import { IoMdPersonAdd } from 'react-icons/io';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 const ContactForm = () => {
   const contacts = useSelector(selectContacts);
@@ -28,13 +29,11 @@ const ContactForm = () => {
       }
     }
     dispatch(addContact(contact))
-      .unwrap()
+      .then(unwrapResult)
       .then(response =>
-        toast.success(
-          `${response.payload.name} was added to your List of Contacts`
-        )
+        toast.success(`${response.name} was added to your List of Contacts`)
       )
-      .catch(() => toast.error(`Something wrong`));
+      .catch(e => toast.error(`Something wrong ${e.message}`));
     resetForm();
   };
 

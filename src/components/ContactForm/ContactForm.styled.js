@@ -12,8 +12,8 @@ export const FormContainer = styled.form`
 `;
 
 export const Label = styled.label`
-  color: #463636;
-  font-weight: 700;
+  color: #363131;
+  font-weight: 500;
   font-size: 18px;
 `;
 

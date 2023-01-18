@@ -8,7 +8,8 @@ const Home = () => {
       </IconContainer>
 
       <Title>
-        Welcome! You can add new contacts to your individual Phonebook
+        <span>Welcome! </span>
+        You can add new contacts to your individual Phonebook
       </Title>
     </Container>
   );

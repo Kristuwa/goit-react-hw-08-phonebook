@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import ContactForm from '../components/ContactForm/ContactForm';
 import ContactList from '../components/ContactList/ContactList';
-import { Toaster } from 'react-hot-toast';
 import {
   Container,
   TitleForm,
@@ -11,30 +10,33 @@ import {
   ContentBlock,
   ScrollBar,
   Message,
-} from './Contacts.styled';
+} from './Pages.styled';
 
-import { selectFilterList } from 'redux/selectors';
+import { selectFilterList } from '../redux/selectors';
 import Filter from 'components/Filter';
 import {
   selectError,
   selectIsLoading,
   selectContacts,
-} from 'redux/contacts/selectors';
+} from '../redux/contacts/selectors';
 import { fetchContacts } from 'redux/contacts/operations';
 import { Notification } from 'components/Notification/Notification';
 import { Loader } from 'components/Loader/Loader';
 import { RiContactsFill } from 'react-icons/ri';
 import { Helmet } from 'react-helmet-async';
+import { useAuth } from 'hooks/useAuth';
+import { LoaderUser } from 'components/LoaderUser/LoaderUser';
 
 const Contacts = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const filterList = useSelector(selectFilterList);
+
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
-
-  const isLoading = useSelector(selectIsLoading);
+  const { isLoading } = useAuth();
+  const contacts = useSelector(selectContacts);
+  const filterList = useSelector(selectFilterList);
+  const isLoadingContacts = useSelector(selectIsLoading);
   const error = useSelector(selectError);
 
   return (
@@ -42,36 +44,34 @@ const Contacts = () => {
       <Helmet>
         <title>Your contacts</title>
       </Helmet>
-      <ContentBlock>
-        <TitleForm>Phonebook</TitleForm>
-        <ContactForm />
-      </ContentBlock>
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          style: {
-            background: '#363636',
-            color: '#fff',
-          },
-        }}
-      />
-      <ContentBlock>
-        <TitleContacts>Contacts</TitleContacts>
+      {isLoading ? (
+        <LoaderUser />
+      ) : (
+        <>
+          {' '}
+          <ContentBlock>
+            <TitleForm>Phonebook</TitleForm>
+            <ContactForm />
+          </ContentBlock>
+          <ContentBlock>
+            <TitleContacts>Contacts</TitleContacts>
 
-        {error && <Notification message="Contacts no found" />}
-        {!isLoading && !error && contacts.length === 0 && (
-          <Message>
-            You have no contacts, add your first contact <RiContactsFill />
-          </Message>
-        )}
-        {contacts.length > 0 && <Filter />}
-        {isLoading && !error && <Loader />}
-        {filterList.length > 0 && (
-          <ScrollBar>
-            <ContactList />
-          </ScrollBar>
-        )}
-      </ContentBlock>
+            {error && <Notification message="Contacts no found" />}
+            {!isLoadingContacts && !error && contacts.length === 0 && (
+              <Message>
+                You have no contacts, add your first contact <RiContactsFill />
+              </Message>
+            )}
+            {contacts.length > 0 && <Filter />}
+            {isLoadingContacts && !error && <Loader />}
+            {filterList.length > 0 && (
+              <ScrollBar>
+                <ContactList />
+              </ScrollBar>
+            )}
+          </ContentBlock>
+        </>
+      )}
     </Container>
   );
 };

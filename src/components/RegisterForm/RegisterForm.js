@@ -1,10 +1,16 @@
+import { unwrapResult } from '@reduxjs/toolkit';
+import { LoaderUser } from 'components/LoaderUser/LoaderUser';
 import { Form } from 'components/LoginForm/LoginForm.styled';
+import { useAuth } from 'hooks/useAuth';
+import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { register } from '../../redux/auth/operations';
+import { Button, Input, Label } from './RegisterForm.styled';
+import { GiArchiveRegister } from 'react-icons/gi';
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
-
+  const { isLoading } = useAuth();
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -14,25 +20,34 @@ export const RegisterForm = () => {
         email: form.elements.email.value,
         password: form.elements.password.value,
       })
-    );
+    )
+      .then(unwrapResult)
+      .then(response => {
+        toast.success(`User ${response.user.name} was register successfully`);
+      })
+      .catch(e => toast.error(`Something wrong: ${e.message}`));
     form.reset();
   };
 
-  return (
+  return isLoading ? (
+    <LoaderUser />
+  ) : (
     <Form onSubmit={handleSubmit} autoComplete="off">
-      <label>
+      <Label>
         Username
-        <input type="text" name="name" />
-      </label>
-      <label>
+        <Input type="text" name="name" placeholder="Enter username" />
+      </Label>
+      <Label>
         Email
-        <input type="email" name="email" />
-      </label>
-      <label>
+        <Input type="email" name="email" placeholder="email@mail.com" />
+      </Label>
+      <Label>
         Password
-        <input type="password" name="password" />
-      </label>
-      <button type="submit">Register</button>
+        <Input type="password" name="password" placeholder="Enter password" />
+      </Label>
+      <Button type="submit">
+        Register <GiArchiveRegister size={20} />
+      </Button>
     </Form>
   );
 };

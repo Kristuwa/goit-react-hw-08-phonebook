@@ -7,21 +7,21 @@ export const Container = styled.div`
   display: flex;
   align-items: centre;
   justify-content: space-around;
-  gap: 100px;
-  padding: 20px 100px;
+  gap: 20px;
+  padding: 20px 40px;
 `;
 
 export const TitleForm = styled.h1`
   text-align: center;
   font-size: 34px;
-  color: #1e1d1d;
+  color: #463636;
   margin-bottom: 20px;
 `;
 
 export const TitleContacts = styled.h2`
   text-align: center;
   font-size: 34px;
-  color: #1e1d1d;
+  color: #463636;
   margin-bottom: 25px;
 `;
 

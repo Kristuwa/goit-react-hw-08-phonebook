@@ -1,8 +1,17 @@
+export const reducerPending = state => {
+  return { ...state, isLoading: true };
+};
+
+export const reducerRejected = (state, action) => {
+  return { ...state, isLoading: false, error: action.payload };
+};
+
 export const registerFulfilledReducer = (state, action) => {
   return {
     ...state,
     user: action.payload.user,
     token: action.payload.token,
+    isLoading: false,
     isLoggedIn: true,
   };
 };
@@ -12,6 +21,7 @@ export const logInFulfilledReducer = (state, action) => {
     ...state,
     user: action.payload.user,
     token: action.payload.token,
+    isLoading: false,
     isLoggedIn: true,
   };
 };
@@ -21,6 +31,7 @@ export const logOutFulfilledReducer = state => {
     ...state,
     user: { name: null, email: null },
     token: null,
+    isLoading: false,
     isLoggedIn: false,
   };
 };

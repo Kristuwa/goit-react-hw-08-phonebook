@@ -15,6 +15,10 @@ export const Button = styled.button`
   border-radius: 3px;
   background-color: #71717157;
   font-size: 12px;
+  &:hover,
+  &:focus {
+    background-color: #a1a1a1;
+  }
 `;
 
 export const Number = styled.span`

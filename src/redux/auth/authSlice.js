@@ -1,7 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
   logInFulfilledReducer,
   logOutFulfilledReducer,
+  reducerPending,
+  reducerRejected,
   refreshUserFulfilledReducer,
   refreshUserPendingReducer,
   refreshUserRejectedReducer,
@@ -14,7 +16,12 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
+  isLoading: false,
+  error: null,
 };
+
+const extraActions = [register, logIn, logOut];
+const getActions = type => extraActions.map(action => action[type]);
 
 const authSlice = createSlice({
   name: 'auth',
@@ -26,7 +33,9 @@ const authSlice = createSlice({
       .addCase(logOut.fulfilled, logOutFulfilledReducer)
       .addCase(refreshUser.pending, refreshUserPendingReducer)
       .addCase(refreshUser.fulfilled, refreshUserFulfilledReducer)
-      .addCase(refreshUser.rejected, refreshUserRejectedReducer);
+      .addCase(refreshUser.rejected, refreshUserRejectedReducer)
+      .addMatcher(isAnyOf(...getActions('pending')), reducerPending)
+      .addMatcher(isAnyOf(...getActions('rejected')), reducerRejected);
   },
 });
 
