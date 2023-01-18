@@ -38,17 +38,6 @@ export const refreshUserFulfilledReducer = (state, action) => {
   };
 };
 
-export const refreshUserRejectedReducer = (state, action) => {
-  return { ...state, isRefreshing: false, error: action.payload.message };
+export const refreshUserRejectedReducer = state => {
+  return { ...state, isRefreshing: false };
 };
-
-export const actionPending = state => ({
-  ...state,
-  isLoading: true,
-});
-
-export const actionRejected = (state, action) => ({
-  ...state,
-  isLoading: false,
-  error: action.payload,
-});

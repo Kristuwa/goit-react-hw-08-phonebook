@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { Helmet } from 'react-helmet';
+
 import ContactForm from '../components/ContactForm/ContactForm';
 import ContactList from '../components/ContactList/ContactList';
 import { Toaster } from 'react-hot-toast';
@@ -24,6 +24,7 @@ import { fetchContacts } from 'redux/contacts/operations';
 import { Notification } from 'components/Notification/Notification';
 import { Loader } from 'components/Loader/Loader';
 import { RiContactsFill } from 'react-icons/ri';
+import { Helmet } from 'react-helmet-async';
 
 const Contacts = () => {
   const dispatch = useDispatch();
@@ -38,9 +39,9 @@ const Contacts = () => {
 
   return (
     <Container>
-      {/* <Helmet>
+      <Helmet>
         <title>Your contacts</title>
-      </Helmet> */}
+      </Helmet>
       <ContentBlock>
         <TitleForm>Phonebook</TitleForm>
         <ContactForm />

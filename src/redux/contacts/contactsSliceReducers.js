@@ -1,19 +1,25 @@
-export const handlePending = state => ({
-  ...state,
-  isLoading: true,
-});
+export const handlePending = state => {
+  return {
+    ...state,
+    isLoading: true,
+  };
+};
 
-export const handleRejected = (state, action) => ({
-  ...state,
-  isLoading: false,
-  error: action.payload,
-});
+export const handleRejected = (state, action) => {
+  return {
+    ...state,
+    isLoading: false,
+    error: action.payload,
+  };
+};
 
-export const handleFulfilled = state => ({
-  ...state,
-  isLoading: false,
-  error: null,
-});
+export const handleFulfilled = state => {
+  return {
+    ...state,
+    isLoading: false,
+    error: null,
+  };
+};
 
 export const fetchContactsFulfilledReducer = (state, action) => {
   return {
