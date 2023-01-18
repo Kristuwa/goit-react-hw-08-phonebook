@@ -29,3 +29,8 @@ export const Button = styled.button`
     background-color: #70565687;
   }
 `;
+
+export const Icon = styled.span`
+  padding-top: 5px;
+  margin-right: 5px;
+`;

@@ -3,8 +3,9 @@ import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { logOut } from 'redux/auth/operations';
 import { useAuth } from '../../hooks/useAuth';
-import { Button, UserMenuTitle, Wrapper } from './UserMenu.styled';
+import { Button, Icon, UserMenuTitle, Wrapper } from './UserMenu.styled';
 import { FaUserMinus } from 'react-icons/fa';
+import { MdMarkEmailRead } from 'react-icons/md';
 export const UserMenu = () => {
   const dispatch = useDispatch();
   const { user } = useAuth();
@@ -20,7 +21,12 @@ export const UserMenu = () => {
 
   return (
     <Wrapper>
-      <UserMenuTitle>Welcome, {user.name} </UserMenuTitle>
+      <UserMenuTitle>
+        <Icon>
+          <MdMarkEmailRead size={20} />
+        </Icon>{' '}
+        {user.email}
+      </UserMenuTitle>
       <Button type="button" onClick={handleLogOut}>
         Logout <FaUserMinus size={16} />
       </Button>
