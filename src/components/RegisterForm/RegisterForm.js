@@ -25,7 +25,7 @@ export const RegisterForm = () => {
       .then(response => {
         toast.success(`User ${response.user.name} was register successfully`);
       })
-      .catch(e => toast.error(`Something wrong: ${e.message}`));
+      .catch(() => toast.error(`Something wrong, try again`));
     form.reset();
   };
 

@@ -6,9 +6,11 @@ import { useDispatch } from 'react-redux';
 import { logIn } from '../../redux/auth/operations';
 import { Button, Form, Input, Label } from './LoginForm.styled';
 import { FaUserPlus } from 'react-icons/fa';
+
 export const LoginForm = () => {
   const dispatch = useDispatch();
   const { isLoading } = useAuth();
+
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -22,7 +24,7 @@ export const LoginForm = () => {
       .then(response => {
         toast.success(`User ${response.user.name} was login successfully`);
       })
-      .catch(e => toast.error(`Something wrong: ${e.message}`));
+      .catch(() => toast.error(`Something wrong, try again`));
     form.reset();
   };
 

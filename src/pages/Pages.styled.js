@@ -3,12 +3,11 @@ import styled from '@emotion/styled';
 import url from '../img/bg-phone.jpg';
 
 export const Container = styled.div`
-  height: 100vh;
   display: flex;
   align-items: centre;
   justify-content: space-around;
   gap: 20px;
-  padding: 20px 40px;
+  padding: 0 40px;
 `;
 
 export const TitleForm = styled.h1`
@@ -26,17 +25,17 @@ export const TitleContacts = styled.h2`
 `;
 
 export const ContentBlock = styled.div`
-  width: 410px;
+  width: 390px;
   background-image: url(${url});
   background-color: #cccccc;
-  height: auto;
+  height: 680px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   border: 10px solid black;
   border-bottom: 80px solid black;
   border-radius: 30px;
-  padding: 20px;
+  padding: 20px 15px;
   box-shadow: 8px 8px 8px 0px rgba(255, 255, 255, 0.5);
 `;
 
@@ -62,8 +61,12 @@ export const ScrollBar = styled.div`
 `;
 
 export const Message = styled.p`
-  margin-left: 15px;
+  padding: 3px 8px;
+  margin-left: 35px;
   font-weight: 500;
   font-size: 18px;
   line-height: 1.52;
+  color: #363131;
+  border-radius: 3px;
+  background-color: #71717157;
 `;

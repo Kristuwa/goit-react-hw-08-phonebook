@@ -7,8 +7,11 @@ export const Wrapper = styled.div`
 `;
 
 export const UserMenuTitle = styled.p`
-  font-weight: 700;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
   color: #21282b;
+  font-size: 18px;
 `;
 
 export const Button = styled.button`
@@ -23,6 +26,6 @@ export const Button = styled.button`
 
   &:hover,
   &:focus {
-    background-color: #a1a1a1;
+    background-color: #70565687;
   }
 `;
